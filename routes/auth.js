@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var checkAuth = require("../middleware/chechAuth")
 
-router.post("/", jsonParser, (req, res, next) => {
+router.post("/", checkAuth, jsonParser, (req, res, next) => {
     const { email, password } = req.body;
     console.log(email, password)
     if (email && password) {

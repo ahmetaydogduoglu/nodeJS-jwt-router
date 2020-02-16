@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+const jwt = require("jsonwebtoken")
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var checkAuth = require("../middleware/chechAuth")
 let books = [{
     name: "satranç",
     author: "Stedan Zweig"
@@ -17,10 +18,12 @@ let books = [{
     author: "J.R.R Tolkien"
 }]
 
-router.get("/", (req, res, next) => {
+router.get("/", checkAuth, (req, res, next) => {
     res.send({
-        books: books
+        books: books,
+        
     })
+   
 })
 
 router.post("/", jsonParser, (req, res, next) => {

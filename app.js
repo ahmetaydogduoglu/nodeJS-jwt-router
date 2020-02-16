@@ -7,16 +7,13 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var books = require("./routes/books")
 var auth = require("./routes/auth")
+var apiAuth = require("./routes/apiAuth")
 app.use(cors());
 
-app.use((req, res, next) => {
-    const token = true
-    if (token) next();
-    else res.json({ err: "error no have token" })
-})
-
+app.use("/apiAuth", apiAuth)
 app.use("/", books)
 app.use("/auth", auth)
+
 
 app.listen(8080, () => {
     console.log("8080 listen by node")
